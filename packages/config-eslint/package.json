@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "type": "module",
   "private": true,
+  "scripts": {
+    "clean": "rm -rf ./build",
+    "purge": "rm -rf ./build ./node_modules ./package-lock.json ./yarn.lock ./pnpm-lock.yaml ./.turbo"
+  },
   "exports": {
     ".": "./index.js",
     "./next": "./next.js",

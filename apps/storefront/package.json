@@ -5,6 +5,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "clean": "rm -rf ./dist",
+    "purge": "rm -rf ./dist ./node_modules ./package-lock.json ./yarn.lock ./pnpm-lock.yaml ./.turbo",
     "dev": "next dev -p 3002",
     "lint": "next lint",
     "check-types": "tsc --noEmit",

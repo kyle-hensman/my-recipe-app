@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "clean": "turbo run clean",
+    "purge": "turbo run purge && rm -rf ./node_modules ./package-lock.json ./yarn.lock ./pnpm-lock.yaml ./.turbo",
     "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",

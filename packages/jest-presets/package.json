@@ -7,6 +7,9 @@
     "browser/jest-preset.ts",
     "node/jest-preset.ts"
   ],
+  "scripts": {
+    "purge": "rm -rf ./node_modules ./package-lock.json ./yarn.lock ./pnpm-lock.yaml ./.turbo"
+  },
   "dependencies": {
     "jest": "^29.7.0",
     "ts-jest": "^29.4.0"

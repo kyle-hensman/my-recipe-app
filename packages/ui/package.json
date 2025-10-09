@@ -32,6 +32,8 @@
   },
   "scripts": {
     "build": "bunchee",
+    "clean": "rm -rf ./dist ./build",
+    "purge": "rm -rf ./dist ./build ./node_modules ./package-lock.json ./yarn.lock ./pnpm-lock.yaml ./.turbo",
     "dev": "bunchee --watch",
     "check-types": "tsc --noEmit",
     "lint": "eslint src/",
