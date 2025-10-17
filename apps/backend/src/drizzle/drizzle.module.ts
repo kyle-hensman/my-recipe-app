@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { Pool } from 'pg';
-import { drizzle } from 'drizzle-orm/node-postgres';
+import { Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Pool } from "pg";
+import { drizzle } from "drizzle-orm/node-postgres";
 
-import * as schema from './schema';
-import { DrizzleDB } from './types/drizzle';
+import * as schema from "./schema";
+import { DrizzleDB } from "./types/drizzle";
 
-export const DRIZZLE = Symbol('drizzle-connection');
+export const DRIZZLE = Symbol("drizzle-connection");
 
 @Module({
   providers: [
@@ -14,7 +14,7 @@ export const DRIZZLE = Symbol('drizzle-connection');
       provide: DRIZZLE,
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const databaseUrl = configService.get<string>('DATABASE_URL');
+        const databaseUrl = configService.get<string>("DATABASE_URL");
         const pool = new Pool({
           connectionString: databaseUrl,
           ssl: true,

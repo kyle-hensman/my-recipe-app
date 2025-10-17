@@ -1,14 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get } from "@nestjs/common";
 
 @Controller()
 export class AppController {
-  @Get('api/health')
+  @Get("api/health")
   getHealthCheck(): {
     status: string;
     time: Date;
   } {
     return {
-      status: 'ok',
+      status: "ok",
       time: new Date(),
     };
   }

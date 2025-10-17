@@ -1,30 +1,20 @@
-import 'dotenv/config';
+import "dotenv/config";
 
-import { drizzle, NodePgDatabase } from 'drizzle-orm/node-postgres';
-import { Pool } from 'pg';
-
-import * as schema from './schema';
-import { sql } from 'drizzle-orm';
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL!,
-  ssl: true,
-});
-
-export const db = drizzle(pool, { schema }) as NodePgDatabase<typeof schema>;
+import { sql } from "drizzle-orm";
+import { db } from ".";
 
 // Purge Database
 export async function purgeDatabase() {
-  if (process.env.NODE_ENV === 'production') return;
+  if (process.env.NODE_ENV === "production") return;
   if (
     process.env.DATABASE_URL &&
-    typeof process.env.DATABASE_URL == 'string' &&
-    process.env.DATABASE_URL.includes('bitter-glitter')
+    typeof process.env.DATABASE_URL == "string" &&
+    process.env.DATABASE_URL.includes("bitter-glitter")
   ) {
     console.warn(
-      'You have targeted the production database, this operation must be done manually',
+      "You have targeted the production database, this operation must be done manually",
     );
-    console.warn('\nAborting the purge process...\n');
+    console.warn("\nAborting the purge process...\n");
     return;
   }
 

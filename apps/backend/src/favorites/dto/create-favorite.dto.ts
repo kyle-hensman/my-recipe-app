@@ -1,5 +1,5 @@
 export class CreateFavoriteDto {
-  userId: number;
+  userId: string;
   recipeId: number;
   title: string;
   image: string;

@@ -1,10 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { FavoritesController } from './favorites.controller';
-import { FavoritesService } from './favorites.service';
-import { DrizzleModule } from '../drizzle/drizzle.module';
-import { ConfigModule } from '@nestjs/config';
+import { Test, TestingModule } from "@nestjs/testing";
+import { FavoritesController } from "./favorites.controller";
+import { FavoritesService } from "./favorites.service";
+import { DrizzleModule } from "../drizzle/drizzle.module";
+import { ConfigModule } from "@nestjs/config";
 
-describe('FavoritesController', () => {
+describe("FavoritesController", () => {
   let controller: FavoritesController;
 
   beforeEach(async () => {
@@ -17,7 +17,7 @@ describe('FavoritesController', () => {
     controller = module.get<FavoritesController>(FavoritesController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

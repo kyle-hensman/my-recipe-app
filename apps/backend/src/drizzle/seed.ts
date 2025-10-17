@@ -1,41 +1,31 @@
-import 'dotenv/config';
+import "dotenv/config";
 
-import { drizzle, NodePgDatabase } from 'drizzle-orm/node-postgres';
-import { Pool } from 'pg';
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
+import { User } from "better-auth";
 
-import * as schema from './schema';
+import * as schema from "./schema";
+import { db } from ".";
+import { auth } from "../auth";
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL!,
-  ssl: true,
-});
+let listOfUsers: User[] = [];
 
-export const db = drizzle(pool, { schema }) as NodePgDatabase<typeof schema>;
-
-let listOfUsers: {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-}[] = [];
-
-// Seed Users
+// // Seed Users
 async function seedUsers(numberOfUsers: number = 2) {
   const userIds = await Promise.all(
     Array(numberOfUsers)
-      .fill('')
+      .fill("")
       .map(async () => {
-        const user = await db
-          .insert(schema.users)
-          .values({
-            email: faker.internet.email(),
+        const results = await auth.api.signUpEmail({
+          body: {
             name: `${faker.person.firstName()} ${faker.person.lastName()}`,
-            password: 'password',
-          })
-          .returning();
-        listOfUsers.push(user[0]);
-        return user[0].id;
+            email: faker.internet.email(),
+            password: `${faker.word.adjective()}_fake_${faker.word.adjective()}`,
+          },
+        });
+
+        const user = results.user;
+        listOfUsers.push(user);
+        return user;
       }),
   );
 
@@ -57,17 +47,17 @@ async function seedFavorites(numberOfFavorites: number = 3) {
   for (const user of listOfUsers) {
     await Promise.all(
       Array(numberOfFavorites)
-        .fill('')
+        .fill("")
         .map(async () => {
           const favorite = await db
             .insert(schema.favorites)
             .values({
               userId: user.id,
-              recipeId: user.id * new Date().getMilliseconds() * 2,
+              recipeId: new Date().getMilliseconds(),
               title: faker.word.noun(),
               image: null,
-              cookTime: `${user.id + 1} hours`,
-              servings: `${user.id + 1} - ${user.id + 2} servings`,
+              cookTime: `${faker.number.int({ min: 1, max: 4 })}:${faker.number.int({ min: 0, max: 60, multipleOf: 10 })}`,
+              servings: `${faker.number.int({ min: 1, max: 4 })} to ${faker.number.int({ min: 6, max: 12 })}`,
               createdAt: new Date(),
             })
             .returning();
