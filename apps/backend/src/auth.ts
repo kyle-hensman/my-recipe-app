@@ -26,7 +26,7 @@ async function sendEmail(message: {
 
   try {
     const response = await transporter.sendMail({
-      from: "kyleh <MS_BmTRRD@test-z0vklo6pq2pl7qrx.mlsender.net>",
+      from: process.env.SMTP_FROM_ADDRESS || "",
       ...message,
     });
 
