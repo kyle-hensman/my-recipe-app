@@ -1,9 +1,9 @@
-import dotenv from "dotenv";
+import { expo } from "@better-auth/expo";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, apiKey, emailOTP, openAPI } from "better-auth/plugins";
+import dotenv from "dotenv";
 import nodemailer from "nodemailer";
-import { expo } from "@better-auth/expo";
 
 dotenv.config();
 
@@ -86,7 +86,7 @@ export const auth = betterAuth({
   ],
   emailAndPassword: {
     enabled: true,
-    sendResetPassword: async ({ user, url, token }, request) => {
+    sendResetPassword: async ({ user, url }) => {
       const success = await sendEmail({
         to: user.email,
         subject: "Reset your password",
@@ -107,7 +107,7 @@ export const auth = betterAuth({
     //     text: `Click the link to verify your email: ${url}`,
     //   });
     // },
-    afterEmailVerification: async (user, request) => {
+    afterEmailVerification: async (user) => {
       console.log(`${user.email} has been successfully verified!`);
       return Promise.resolve();
     },

@@ -1,9 +1,9 @@
-import dotenv from "dotenv";
 import { Injectable, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import dotenv from "dotenv";
 
-import { ExtractedRecipeDto } from "./dto/extracted-recipe";
 import { ServiceResponseDto } from "../common/types/service-response.dto";
+import { ExtractedRecipeDto } from "./dto/extracted-recipe";
 
 dotenv.config();
 
@@ -46,6 +46,7 @@ export class ScanService {
           dataUrl: dataUrlString,
         }),
       });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const imageToTextResponseJson = await imageToTextResponse.json();
       console.log("response: ", imageToTextResponseJson);
 
