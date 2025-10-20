@@ -7,4 +7,6 @@ export class Favorite {
   cookTime: string | null;
   servings: string | null;
   createdAt: Date | null;
+  updatedAt: Date | null;
+  deletedAt: Date | null;
 }

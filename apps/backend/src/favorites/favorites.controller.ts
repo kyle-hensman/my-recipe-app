@@ -8,11 +8,11 @@ import {
   Patch,
   Post,
   Query,
-  UseGuards,
+  // UseGuards,
 } from "@nestjs/common";
 import { ApiQuery } from "@nestjs/swagger";
 
-import { AuthGuard } from "../guards/auth.guard";
+// import { AuthGuard } from "../guards/auth.guard";
 import { CreateFavoriteDto } from "./dto/create-favorite.dto";
 import { UpdateFavoriteDto } from "./dto/update-favorite.dto";
 import { FavoritesService } from "./favorites.service";
@@ -23,7 +23,7 @@ export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   create(@Body() createFavoriteDto: CreateFavoriteDto) {
     if (
       !createFavoriteDto.userId ||
@@ -57,7 +57,7 @@ export class FavoritesController {
   }
 
   @Get(":id")
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   findOne(@Param("id") id: string) {
     if (!id) {
       throw new BadRequestException("Missing required params");
@@ -67,7 +67,7 @@ export class FavoritesController {
   }
 
   @Patch(":id")
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   update(
     @Param("id") id: string,
     @Body() updateFavoriteDto: UpdateFavoriteDto,
@@ -80,7 +80,7 @@ export class FavoritesController {
   }
 
   @Delete(":id")
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   remove(@Param("id") id: string) {
     if (!id) {
       throw new BadRequestException("Missing required params");

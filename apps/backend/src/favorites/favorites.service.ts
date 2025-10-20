@@ -6,7 +6,7 @@ import { UpdateFavoriteDto } from "./dto/update-favorite.dto";
 import { DRIZZLE } from "../drizzle/drizzle.module";
 import { type DrizzleDB } from "../drizzle/types/drizzle";
 import { favorites } from "../drizzle/schema";
-import { ServiceResponseDto } from "./dto/service-response.dto";
+import { ServiceResponseDto } from "../common/types/service-response.dto";
 import { Favorite } from "./entities/favorite.entity";
 
 const favoritesPerPage = 10;
@@ -55,6 +55,7 @@ export class FavoritesService {
     page: number | undefined = 1,
   ): Promise<ServiceResponseDto<Favorite[]>> {
     try {
+      const foundFavoritesCount = await this.db.$count(favorites);
       const foundFavorites = await this.db
         .select()
         .from(favorites)
@@ -68,6 +69,7 @@ export class FavoritesService {
           data: null,
           page: page,
           count: 0,
+          total: 0,
         };
       }
 
@@ -77,6 +79,7 @@ export class FavoritesService {
         data: foundFavorites,
         page: page,
         count: foundFavorites.length,
+        total: foundFavoritesCount,
       };
     } catch (error) {
       console.error(error);
@@ -86,6 +89,7 @@ export class FavoritesService {
         data: null,
         page: page,
         count: 0,
+        total: 0,
       };
     }
   }
@@ -100,7 +104,7 @@ export class FavoritesService {
       if (!foundFavorites) {
         return {
           success: false,
-          error: Error(`No favorites found with the id ${favoriteId}`),
+          error: Error(`No favorite found with the id ${favoriteId}`),
           data: null,
         };
       }

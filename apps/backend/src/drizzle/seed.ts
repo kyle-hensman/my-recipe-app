@@ -59,6 +59,7 @@ async function seedFavorites(numberOfFavorites: number = 3) {
               cookTime: `${faker.number.int({ min: 1, max: 4 })}:${faker.number.int({ min: 0, max: 60, multipleOf: 10 })}`,
               servings: `${faker.number.int({ min: 1, max: 4 })} to ${faker.number.int({ min: 6, max: 12 })}`,
               createdAt: new Date(),
+              updatedAt: new Date(),
             })
             .returning();
           favoriteIds.push(favorite[0].id);
@@ -81,12 +82,55 @@ async function seedFavorites(numberOfFavorites: number = 3) {
   return Promise.resolve();
 }
 
+// Seed Recipes
+async function seedRecipes(numberOfRecipes: number = 2) {
+  let recipeIds: number[] = [];
+
+  for (const user of listOfUsers) {
+    await Promise.all(
+      Array(numberOfRecipes)
+        .fill("")
+        .map(async () => {
+          const recipe = await db
+            .insert(schema.recipes)
+            .values({
+              userId: user.id,
+              title: faker.word.noun(),
+              image: null,
+              cookTime: `${faker.number.int({ min: 1, max: 4 })}:${faker.number.int({ min: 0, max: 60, multipleOf: 10 })}`,
+              servings: `${faker.number.int({ min: 1, max: 4 })} to ${faker.number.int({ min: 6, max: 12 })}`,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            })
+            .returning();
+          recipeIds.push(recipe[0].id);
+          return recipe[0].id;
+        }),
+    );
+  }
+
+  if (recipeIds && recipeIds.length > 0) {
+    console.log(
+      `~~ ${recipeIds.length} recipes added to the database successfully ~~`,
+    );
+  } else {
+    console.log(
+      `~!~ failed to add ${recipeIds.length} recipes to the database ~~`,
+    );
+  }
+
+  recipeIds = []; // reset the array to avoid memory leaks
+  return Promise.resolve();
+}
+
 async function main() {
   try {
     // seed fake users
     await seedUsers(5);
     // seed fake favorites
     await seedFavorites();
+    // seed fake recipes
+    await seedRecipes();
   } catch (error) {
     console.error(error);
   } finally {

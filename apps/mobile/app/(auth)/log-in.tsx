@@ -4,7 +4,7 @@ import { COLORS } from '@/constants/colors';
 import { loggedInRedirect } from '@/constants/routes';
 import { auth } from '@/services/auth';
 import { Ionicons } from '@expo/vector-icons';
-import { Redirect, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 

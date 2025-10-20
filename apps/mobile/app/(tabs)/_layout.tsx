@@ -1,16 +1,33 @@
+import { COLORS } from '@/constants/colors';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
 const TabsLayout = () => {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: COLORS.primary,
+        tabBarInactiveTintColor: COLORS.textLight,
+        tabBarStyle: {
+          backgroundColor: COLORS.white,
+          borderTopColor: COLORS.textLight,
+          borderTopWidth: 1,
+          paddingBottom: 8,
+          paddingTop: 8,
+          height: 80,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "600",
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: "Recipes",
-          headerShown: false,
-          headerShadowVisible: false,
           tabBarStyle: {
             elevation: 0,
           },
@@ -21,8 +38,6 @@ const TabsLayout = () => {
         name="search"
         options={{
           title: "Search",
-          headerShown: false,
-          headerShadowVisible: false,
           tabBarStyle: {
             elevation: 0,
           },
@@ -33,8 +48,6 @@ const TabsLayout = () => {
         name="favorites"
         options={{
           title: "Favorites",
-          headerShown: false,
-          headerShadowVisible: false,
           tabBarStyle: {
             elevation: 0,
           },

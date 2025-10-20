@@ -9,6 +9,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
+    console.error("STILL USING AUTH GUARD");
     const request = context.switchToHttp().getRequest<Request>();
     const expectedApiKey = this.configService.get<string>(
       "CLIENT_SECRET_API_KEY",

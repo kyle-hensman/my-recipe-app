@@ -171,6 +171,7 @@ export const homeStyles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 4,
     backgroundColor: COLORS.border,
+    borderWidth: 0,
   },
   selectedCategoryImage: {
     borderWidth: 2,
@@ -189,7 +190,8 @@ export const homeStyles = StyleSheet.create({
 
 export const recipeCardStyles = StyleSheet.create({
   container: {
-    width: cardWidth,
+    width: "100%",
+    display: "flex",
     backgroundColor: COLORS.card,
     borderRadius: 16,
     marginBottom: 16,
@@ -213,22 +215,25 @@ export const recipeCardStyles = StyleSheet.create({
     backgroundColor: COLORS.border,
   },
   content: {
+    display: 'flex',
     padding: 12,
   },
   title: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "700",
     color: COLORS.text,
     marginBottom: 4,
     lineHeight: 20,
   },
   description: {
+    flexGrow: 1,
     fontSize: 12,
     color: COLORS.textLight,
     marginBottom: 8,
     lineHeight: 16,
   },
   footer: {
+    marginTop: "auto",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, FlatList } from "react-native";
 import { useRouter } from "expo-router";
 
-import { MealAPI } from "@/services/meal.api";
-// import { useDebounce } from "@/hooks/useDebounce";
+import { MealAPI } from "@/services/meal-api";
+import { useDebounce } from "@/hooks/use-debouce";
 import { searchStyles } from "@/assets/styles/search.styles";
 import { COLORS } from "@/constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import Loading from "@/components/loading";
 import { auth } from "@/services/auth";
-// import RecipeCard from "@/components/RecipeCard";
+import RecipeCard from "@/components/recipe-card";
 
 const SearchScreen = () => {
   const { status } = auth();
@@ -21,9 +21,9 @@ const SearchScreen = () => {
 
   const router = useRouter();
 
-  // const debouncedSearchQuery = useDebounce(searchQuery, 300);
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  const performSearch = async (query: string) => {
+  const performSearch = async (query) => {
     // if no search query
     if (!query.trim()) {
       const randomMeals = await MealAPI.getRandomMeals(12);
@@ -70,8 +70,8 @@ const SearchScreen = () => {
       setLoading(true);
 
       try {
-        // const results = await performSearch(debouncedSearchQuery);
-        // setRecipes(results);
+        const results = await performSearch(debouncedSearchQuery);
+        setRecipes(results);
       } catch (error) {
         console.error("Error searching:", error);
         setRecipes([]);
@@ -81,8 +81,7 @@ const SearchScreen = () => {
     };
 
     handleSearch();
-  // }, [debouncedSearchQuery, initialLoading]);
-  }, [initialLoading]);
+  }, [debouncedSearchQuery, initialLoading]);
 
   if (initialLoading) return <Loading />
   if (status === 'pending') return <Loading />
@@ -127,17 +126,17 @@ const SearchScreen = () => {
             <Loading />
           </View>
         ) : (
-          // <FlatList
-          //   data={recipes}
-          //   renderItem={({ item }) => <RecipeCard recipe={item} />}
-          //   keyExtractor={(item) => item.id.toString()}
-          //   numColumns={2}
-          //   columnWrapperStyle={searchStyles.row}
-          //   contentContainerStyle={searchStyles.recipesGrid}
-          //   showsVerticalScrollIndicator={false}
-          //   ListEmptyComponent={<NoResultsFound />}
-          // />
-          <NoResultsFound />
+          <FlatList
+            data={recipes}
+            renderItem={({ item }) => <RecipeCard recipe={item} />}
+            keyExtractor={( item: any ) => `search-${item.id}`}
+            numColumns={2}
+            columnWrapperStyle={searchStyles.row}
+            contentContainerStyle={searchStyles.recipesGrid}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={<NoResultsFound />}
+          />
+          // <NoResultsFound />
         )}
       </View>
     </View>
